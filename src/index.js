@@ -3,7 +3,6 @@ let groceryList = [];
 // loadContent();
 window.onload = function (event) {
   groceryList = getItemsFromLocalStorage();
-  console.log("something");
   loadContent();
 };
 
@@ -105,9 +104,6 @@ function createListItem(id, name, qty) {
     groceryList = groceryList.filter((item) => item.id !== itemId);
     parentListNode.remove();
 
-    console.log(groceryList);
-    parentListNode.remove();
-
     if (groceryList.length === 0) list.appendChild(getEmptyListMessage());
     changeFormStateToAdd();
     updateItemsInLocalStorage(groceryList);
@@ -123,29 +119,21 @@ function createListItem(id, name, qty) {
 function addItem() {
   const itemName = itemNameNode.value;
   const itemQty = parseInt(itemQtyNode.value, 10);
-  console.log({
-    itemName,
-    itemQty,
-  });
+
   if (!validateInput(itemName, itemQty)) return;
   if (groceryList.length === 0) {
     list.children[0].remove();
   }
-  console.log(groceryList);
 
   let index = groceryList.findIndex((item) => item.name === itemName);
 
   if (index !== -1) {
     let listElement = document.querySelector(`#item-${groceryList[index].id}`);
     let currentQty = groceryList[index].qty + itemQty;
-
-    console.log(groceryList);
     listElement.children[0].innerText = getTitle(itemName, currentQty);
     groceryList[index].qty = currentQty;
   } else {
     const itemId = Date.now();
-    console.log("code was her");
-    console.log({ id: itemId, name: itemName, qty: itemQty });
     const newListElement = createListItem(itemId, itemName, itemQty);
     list.appendChild(newListElement);
     groceryList.push({
@@ -169,12 +157,10 @@ function loadContent() {
   groceryList.forEach((item) => {
     const { id, name, qty } = item;
     let newListItem = createListItem(id, name, qty);
-    console.log(newListItem);
     list.appendChild(newListItem);
   });
 
   if (groceryList.length === 0) {
-    console.log("Were her ");
     list.appendChild(getEmptyListMessage());
   }
 }
