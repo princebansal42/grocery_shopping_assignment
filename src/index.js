@@ -165,6 +165,44 @@ function loadContent() {
   }
 }
 
+document
+  .querySelector(".sort-button-container")
+  .addEventListener("click", (event) => {
+    const sortCompareFunctions = {
+      "sort-1": (item1, item2) => {
+        return item1.qty - item2.qty;
+      },
+      "sort-2": (item1, item2) => {
+        return item2.qty - item1.qty;
+      },
+      "sort-3": (item1, item2) => {
+        return item1.name.localeCompare(item2.name);
+      },
+      "sort-4": (item1, item2) => {
+        return item2.name.localeCompare(item1.name);
+      },
+    };
+    if (event.target.tagName === "BUTTON") {
+      sort(sortCompareFunctions[event.target.id]);
+    }
+  });
+function sort(compareFunction) {
+  if (!compareFunction) {
+    compareFunction = (item1, item2) => {
+      item1.qty - item2.qty;
+    };
+  }
+  groceryList = groceryList.sort(compareFunction);
+  clearItemList();
+  loadContent();
+  updateItemsInLocalStorage(groceryList);
+}
+
+function clearItemList() {
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
+}
 function getItemsFromLocalStorage() {
   let groceryList = localStorage.getItem("groceryList");
   if (groceryList) {
