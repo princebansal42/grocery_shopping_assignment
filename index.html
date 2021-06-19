@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="header">Grocery List</div>
+      <div class="container">
+        <div class="form-container">
+          <div class="form-heading">
+            <h1>Add Grocery Item</h1>
+          </div>
+          <div class="form">
+            <div class ="input-name">
+              <span>Add Item</span>
+              <br/>
+              <input id = "add-item-name" type="text" placeholder="Add item Name" required/ >
+            </div>
+            <div class = input-qty>
+            <span>Quantity</span>
+            <br/>
+              <input id = "add-item-qty" type="number" placeholder="Add item Quantity" required/ >
+            </div>
+            <button class = "add-item-btn">Add Item</button>
+          </div>
+        </div>
+        <div class="list-container">
+          <div class = "list-heading">
+            <h1>Grocery List<h1>
+          </div>
+          <div class = "list">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/index.js"></script>
+  </body>
+</html>
