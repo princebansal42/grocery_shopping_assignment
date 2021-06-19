@@ -1,6 +1,12 @@
 import "./styles.css";
-let groceryList = getItemsFromLocalStorage();
-loadContent();
+let groceryList = [];
+// loadContent();
+window.onload = function (event) {
+  groceryList = getItemsFromLocalStorage();
+  console.log("something");
+  loadContent();
+};
+
 const itemNameNode = document.querySelector("#add-item-name");
 const itemQtyNode = document.querySelector("#add-item-qty");
 const formHeading = document.querySelector(".form-heading");
@@ -34,7 +40,7 @@ function changeFormStateToEdit(parentListNode, id) {
     groceryList[index] = {
       id,
       name: newName,
-      qty: newQty
+      qty: newQty,
     };
 
     parentListNode.children[0].innerText = getTitle(
@@ -52,10 +58,6 @@ function changeFormStateToAdd() {
   itemNameNode.value = "";
   itemQtyNode.value = "";
   itemNameLabel.children[0].innerText = "Add Item";
-  // console.log(formNode);
-  // console.log(formNode.children[0]);
-  // console.log(formNode.children[1]);
-  // console.log(formNode.children[2]);
 
   if (formNode.children[2]) formNode.children[2].remove();
   const form = document.querySelector(".form");
@@ -123,7 +125,7 @@ function addItem() {
   const itemQty = parseInt(itemQtyNode.value, 10);
   console.log({
     itemName,
-    itemQty
+    itemQty,
   });
   if (!validateInput(itemName, itemQty)) return;
   if (groceryList.length === 0) {
@@ -149,7 +151,7 @@ function addItem() {
     groceryList.push({
       id: itemId,
       name: itemName,
-      qty: itemQty
+      qty: itemQty,
     });
   }
   updateItemsInLocalStorage(groceryList);
@@ -161,12 +163,9 @@ document.querySelector(".add-item-btn").addEventListener("click", () => {
   addItem();
 });
 
-// function sortListItems
-function clearList() {
-  while (list.firstChild) list.removeChild(list.firstChild);
-}
 function loadContent() {
   // groceryList = getItemsFromLocalStorage();
+  const list = document.querySelector(".list");
   groceryList.forEach((item) => {
     const { id, name, qty } = item;
     let newListItem = createListItem(id, name, qty);
@@ -179,20 +178,13 @@ function loadContent() {
     list.appendChild(getEmptyListMessage());
   }
 }
-// window.addEventListener("load", function (event) {
-//   groceryList = getItemsFromLocalStorage();
-//   console.log("something");
-//   const list = document.querySelector(".list");
-//   groceryList.forEach((item, index) => {
-//     list.appendChild(createListItem(item.name, item.qty, index));
-//   });
-// });
+
 function getItemsFromLocalStorage() {
   let groceryList = localStorage.getItem("groceryList");
   if (groceryList) {
     groceryList = JSON.parse(groceryList);
   } else {
-    groceryList = {};
+    groceryList = [];
     localStorage.setItem("groceryList", "[]");
   }
   return groceryList;
