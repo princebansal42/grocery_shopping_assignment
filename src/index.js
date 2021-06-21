@@ -32,9 +32,12 @@ function changeFormStateToEdit(parentListNode, id) {
       return;
     }
 
-    const newName = itemNameNode.value;
-    const newQty = parseInt(itemQtyNode.value, 10);
+    let newName = itemNameNode.value;
+    let newQty = parseInt(itemQtyNode.value, 10);
     if (!validateInput(newName, newQty)) return;
+    let index2 = groceryList.findIndex((item) => item.name === newName);
+    let anotherElementExist = index2 !== -1 && index !== index2;
+    if (anotherElementExist) newQty += groceryList[index2].qty;
 
     groceryList[index] = {
       id,
@@ -42,10 +45,15 @@ function changeFormStateToEdit(parentListNode, id) {
       qty: newQty,
     };
 
-    parentListNode.children[0].innerText = getTitle(
-      itemNameNode.value,
-      itemQtyNode.value
-    );
+    parentListNode.children[0].innerText = getTitle(newName, newQty);
+    if (anotherElementExist) {
+      const alreadyExistingListNode = document.querySelector(
+        `#item-${groceryList[index2].id}`
+      );
+      groceryList.splice(index2, 1);
+      alreadyExistingListNode.remove();
+    }
+
     updateItemsInLocalStorage(groceryList);
 
     changeFormStateToAdd();
