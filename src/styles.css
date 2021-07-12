@@ -100,7 +100,7 @@ button {
   color: grey;
 }
 
-.sort-button-container {
+/* .sort-button-container {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -109,7 +109,7 @@ button {
 }
 .sort-button-container > button {
   flex-grow: 1;
-}
+} */
 @media screen and (max-width: 1500px) {
   .list-item-name {
     width: 80%;
